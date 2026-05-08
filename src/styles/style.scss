@@ -1,0 +1,19 @@
+@use "freelancers";
+@use "orders";
+@use "dashboard";
+
+.sidebar {
+  .image {
+    i.fa {
+      color: white;
+      font-size: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .info {
+    text-wrap: auto;
+  }
+}

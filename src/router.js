@@ -13,7 +13,6 @@ import {OrdersView} from "./components/orders/orders-view";
 import {OrdersCreate} from "./components/orders/orders-create";
 import {OrdersEdit} from "./components/orders/orders-edit";
 import {OrdersDelete} from "./components/orders/orders-delete";
-import {Layout} from "./components/layout";
 
 export class Router {
     constructor() {
@@ -199,19 +198,18 @@ export class Router {
                 }
             },
         ]
-        this.layout = new Layout();
     }
 
     initEvents() {
-        window.addEventListener('DOMContentLoaded', this.activateRout.bind(this));
-        window.addEventListener('popstate', this.activateRout.bind(this));
+        window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
+        window.addEventListener('popstate', this.activateRoute.bind(this));
         window.addEventListener('click', this.clickHandler.bind(this));
     }
 
     async openNewRoute (url) {
         const currentRoute = window.location.pathname;
         history.pushState({}, '', url);
-        await this.activateRout(null, currentRoute);
+        await this.activateRoute(null, currentRoute);
     }
 
     async clickHandler(e) {
@@ -236,7 +234,7 @@ export class Router {
         }
     }
 
-    async activateRout(e, oldRoute = null) {
+    async activateRoute(e, oldRoute = null) {
         if (oldRoute) {
             const currentRoute = this.routes.find(item => item.route === oldRoute);
 
@@ -289,7 +287,7 @@ export class Router {
                     contentBlock = document.getElementById('content-layout');
                     document.body.classList.add('sidebar-mini');
                     document.body.classList.add('layout-fixed');
-                    this.layout.init(newRoute.route);
+                    this.activateMenuItem(newRoute)
                 } else {
                     document.body.classList.remove('sidebar-mini');
                     document.body.classList.remove('layout-fixed');
@@ -306,7 +304,18 @@ export class Router {
         } else {
             console.log('no route found');
             history.pushState({}, '', '/404');
-            await this.activateRout();
+            await this.activateRoute();
         }
+    }
+
+    activateMenuItem(route) {
+        document.querySelectorAll('.sidebar .nav-link').forEach(item => {
+            const href = item.getAttribute('href');
+            if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        })
     }
 }

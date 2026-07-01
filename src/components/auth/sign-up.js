@@ -14,7 +14,6 @@ export class SignUp {
         this.emailElement = document.getElementById("email");
         this.passwordElement = document.getElementById("password");
         this.repeatPasswordElement = document.getElementById("password-repeat");
-        this.agreeElement = document.getElementById("agree");
         this.commonErrorElement = document.getElementById("common-error");
 
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
@@ -60,12 +59,6 @@ export class SignUp {
             isValid = false;
         }
 
-        if (this.agreeElement.checked) {
-            this.agreeElement.classList.remove('is-invalid');
-        } else {
-            this.agreeElement.classList.add('is-invalid');
-            isValid = false;
-        }
 
         return isValid;
     }

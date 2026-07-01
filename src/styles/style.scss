@@ -1,6 +1,5 @@
 @use "freelancers";
 @use "orders";
-@use "dashboard";
 
 .sidebar {
   .image {
@@ -16,4 +15,12 @@
   .info {
     text-wrap: auto;
   }
+}
+
+.fc-daygrid-event {
+  text-wrap: auto;
+}
+
+.fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
+  padding: 3px;
 }

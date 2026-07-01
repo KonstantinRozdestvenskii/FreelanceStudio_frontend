@@ -38,37 +38,45 @@ export class Dashboard {
         const preparedEvents = [];
 
         for (let i = 0; i < orders.length; i++) {
-            preparedEvents.push({
-                title          :orders[i].owner.name + ' ' + orders[i].owner.lastName + ' ' + 'создал заказ ' + orders[i].number,
-                start          : new Date(orders[i].createdAt),
-                backgroundColor: '#6c757d',
-                borderColor    : '#6c757d',
-                allDay: true
-            });
-            preparedEvents.push({
-                title          :'Дедлайн заказа ' + orders[i].number,
-                start          : new Date(orders[i].deadlineDate),
-                backgroundColor: '#ffc107',
-                borderColor    : '#ffc107',
-                allDay: true
-            });
-            if (orders[i].status === config.orderStatuses.canceled) {
-                preparedEvents.push({
-                    title          : 'Отменён заказ ' + orders[i].number,
-                    start          : new Date(orders[i].updatedAt),
-                    backgroundColor: '#f56954',
-                    borderColor    : '#f56954',
-                    allDay: true
-                });
+
+            let color = null;
+            if (orders[i].status === config.orderStatuses.success) {
+                color = 'gray';
             }
-            if (orders[i].completeDate) {
+
+            if (orders[i].scheduledDate) {
+                const scheduledDate = new Date (orders[i].scheduledDate);
                 preparedEvents.push({
-                    title          : orders[i].freelancer.name + ' ' + orders[i].freelancer.lastName + ' ' + 'выполнил заказ ' + orders[i].number,
-                    start          : new Date(orders[i].completeDate),
-                    backgroundColor: '#00a65a',
-                    borderColor    : '#00a65a',
-                    allDay: true
-                });
+                            title          : orders[i].freelancer.name + ' ' + orders[i].freelancer.lastName
+                                + ' выполняет заказ ' + orders[i].number,
+                            start          : scheduledDate,
+                            backgroundColor: color ? color :'#00c0ef', //Info (aqua)
+                            borderColor    : color ? color :'#00c0ef', //Primary (light-blue)
+                            allDay         : true
+                        })
+            }
+
+            if (orders[i].deadlineDate) {
+                const deadlineDate = new Date (orders[i].deadlineDate);
+                preparedEvents.push({
+                            title          : 'Дедлайн заказа ' + orders[i].number,
+                            start          : deadlineDate,
+                            backgroundColor: color ? color :'#f39c12', //yellow
+                            borderColor    : color ? color :'#f39c12', //yellow
+                            allDay         : true
+                        })
+            }
+
+            if (orders[i].completeDate) {
+                const completeDate = new Date (orders[i].completeDate);
+                preparedEvents.push({
+                            title          : 'Заказ ' + orders[i].number +
+                                ' выполнен фрилансером ' + orders[i].freelancer.name,
+                            start          : completeDate,
+                            backgroundColor: '#00a65a', //Success (green)
+                            borderColor    : '#00a65a', //Success (green)
+                            allDay         : true
+                        })
             }
         }
 

@@ -1,5 +1,5 @@
-// Берём адрес из переменной окружения (Vercel/Render) или используем локальный по умолчанию
-const host = process.env.API_URL || 'http://localhost:3000';
+
+const host = 'http://localhost:3000' || 'https://freelancestudio-backend.onrender.com'
 
 const config = {
     host: host,

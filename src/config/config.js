@@ -1,5 +1,5 @@
 
-const host = 'http://localhost:3000' || 'https://freelancestudio-backend.onrender.com'
+const host = 'https://freelancestudio-backend.onrender.com'
 
 const config = {
     host: host,
